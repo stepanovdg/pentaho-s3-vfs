@@ -34,6 +34,8 @@ import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.VFS;
+import org.jets3t.service.Constants;
+import org.jets3t.service.Jets3tProperties;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
@@ -71,7 +73,7 @@ public class S3TestIntegration {
     awsSecretKey = settings.getProperty( "awsSecretKey" );
 
     AWSCredentials awsCredentials = new AWSCredentials( awsAccessKey, awsSecretKey );
-
+    Jets3tProperties.getInstance( Constants.JETS3T_PROPERTIES_FILENAME ).setProperty( "httpclient.max-connections", "100" );
     S3Service service = new RestS3Service( awsCredentials );
 
     S3Bucket[] myBuckets = service.listAllBuckets();
